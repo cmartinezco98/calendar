@@ -71,3 +71,14 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Dependencias 
+
+## JWT  
+-- $ npm install --save @nestjs/jwt@10.1.1 passport-jwt@4.0.1
+-- $ npm install --save-dev @types/passport-jwt@3.0.9
+-- $ npm i @nestjs/passport@10.0.1
+
+## El paquete @nestjs/jwt ayuda a la manipulación de JWT.
+## El paquete passport-jwt implementa la estrategia JWT.
+## Al paquete @types/passport-jwt proporciona las definiciones de tipo para facilitar el desarrollo.
