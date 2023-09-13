@@ -1,27 +1,64 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
+import { CreateAuthDto } from './dto/create-auth.dto';
+import { LoginAuthDto } from './dto/login-auth.dto';
+import { UpdateAuthDto } from './dto/update-auth.dto';
+import { CreateUserDto } from '../users/dto/create-user.dto';
+
 
 
 @Injectable()
 export class AuthService {
-  constructor(private jwtTokenService: JwtService) { }
+  constructor(private jwtTokenService: JwtService, private usersService: UsersService) { }
 
+  private data: LoginAuthDto = {
+    token: "",
+    result: ""
+  };
 
-  async auth() {
+  async JWTGenerator(payload: User) {
 
     const token = await this.jwtTokenService.sign({
-      // k_user: user.k_user,
-      // n_name: user.n_name,
-      // n_email: user.n_email
+      k_user: payload.k_user,
+      n_name: payload.n_name,
+      n_email: payload.n_email
     });
-    const data = {
-      token,
-      result: "Login Successfuly"
-    };
-    return data;
+    this.data.token = token;
+    this.data.result = "Inicio de sesion exitoso"
   }
+
+  async authSignin(dataCreateUser: CreateUserDto): Promise<object> {
+    const resUser: User = await this.usersService.create(dataCreateUser);
+    if (resUser) {
+      this.JWTGenerator(resUser);
+    } else {
+      this.data.token = "";
+      this.data.result = "Error al crear usuario"
+    }
+    return this.data;
+  }
+
+  async authLogin({ n_email, n_password }: LoginAuthDto): Promise<object> {
+    const resUser: User = await this.usersService.findOneByEmail(n_email);
+    if (resUser) {
+      if (resUser.n_email == n_email && resUser.n_password == n_password) {
+        this.JWTGenerator(resUser);
+      } else {
+        this.data.token = "";
+        this.data.result = "Usuario o contraseña incorrectas"
+      }
+    }
+    else {
+      this.data.token = "";
+      this.data.result = "Usuario no existe"
+    }
+    return this.data;
+  }
+
+
+
 
   create(createAuthDto: CreateAuthDto) {
     return 'This action adds a new auth';

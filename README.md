@@ -88,6 +88,9 @@ Nest is [MIT licensed](LICENSE).
 - Autocompletado de rutas para uso de TypeORM y el módulo de trabajo con MySQL.
  $ npm i @nestjs/typeorm@10.0.0 mysql2 typeorm
 
+- Este paquete contiene tipos de definiciones de Express (http://expressjs.com).
+ $ npm i @types/express
+
 
 https://codigoencasa.com/autenticacion-jwt-de-nestjs/
 ```
