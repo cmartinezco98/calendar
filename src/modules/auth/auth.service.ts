@@ -1,13 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { compare, hash } from 'bcrypt';
+import { CreateUserDto } from '../users/dto/create-user.dto';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
 import { LoginAuthDto } from './dto/login-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-
-
 
 @Injectable()
 export class AuthService {
@@ -30,53 +27,34 @@ export class AuthService {
   }
 
   async authSignin(dataCreateUser: CreateUserDto): Promise<object> {
-    const resUser: User = await this.usersService.create(dataCreateUser);
-    if (resUser) {
-      this.JWTGenerator(resUser);
-    } else {
+
+    const userExist = await this.usersService.findOneByEmail(dataCreateUser.n_email);
+    if (userExist) {
       this.data.token = "";
-      this.data.result = "Error al crear usuario"
+      this.data.result = "Usuario ya existe"
+      return this.data;
+    }
+    dataCreateUser.n_password = await hash(dataCreateUser.n_password, 10);
+    let resUser: User = await this.usersService.create(dataCreateUser);
+    if (resUser) {
+      resUser = await this.usersService.findOneByEmail(resUser.n_email);
+      this.JWTGenerator(resUser);
     }
     return this.data;
   }
 
   async authLogin({ n_email, n_password }: LoginAuthDto): Promise<object> {
+
     const resUser: User = await this.usersService.findOneByEmail(n_email);
     if (resUser) {
-      if (resUser.n_email == n_email && resUser.n_password == n_password) {
+      const match = await compare(n_password, resUser.n_password);
+      if (resUser.n_email == n_email && match) {
         this.JWTGenerator(resUser);
       } else {
         this.data.token = "";
         this.data.result = "Usuario o contraseña incorrectas"
       }
-    }
-    else {
-      this.data.token = "";
-      this.data.result = "Usuario no existe"
-    }
+    } else { throw new HttpException('Usuario no encontrado', HttpStatus.NOT_FOUND); }
     return this.data;
-  }
-
-
-
-
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
-
-  findAll() {
-    return `This action returns all auth`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
   }
 }

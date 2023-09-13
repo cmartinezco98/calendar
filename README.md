@@ -91,7 +91,10 @@ Nest is [MIT licensed](LICENSE).
 - Este paquete contiene tipos de definiciones de Express (http://expressjs.com).
  $ npm i @types/express
 
+- Una biblioteca para ayudarle a codificar contraseñas (https://www.npmjs.com/package/bcrypt/v/5.1.1?activeTab=readme)
+$  npm i bcrypt@5.1.1
 
+- Autentificacion con JWT en Nest
 https://codigoencasa.com/autenticacion-jwt-de-nestjs/
 ```
 

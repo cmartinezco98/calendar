@@ -15,10 +15,9 @@ export class UsersService {
   async create(createDataUser: CreateUserDto): Promise<User> {
     try {
       const resCreateUser = await this.userRepository.save(createDataUser);
-      console.log(resCreateUser);
       return resCreateUser;
     } catch (err) {
-      throw new HttpException('Error al crear el usuario', HttpStatus.BAD_REQUEST);;
+      throw new HttpException(`${err.sqlMessage}, Error al crear el usuario`, HttpStatus.BAD_REQUEST);;
     }
   }
 
