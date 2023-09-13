@@ -76,13 +76,18 @@ Nest is [MIT licensed](LICENSE).
 
 ## JWT  
 ```bash
+- El paquete @nestjs/jwt ayuda a la manipulación de JWT.
  $ npm install --save @nestjs/jwt@10.1.1 passport-jwt@4.0.1
+
+- El paquete passport-jwt implementa la estrategia JWT.
  $ npm install --save-dev @types/passport-jwt@3.0.9
+
+- Al paquete @types/passport-jwt proporciona las definiciones de tipo para facilitar el desarrollo.
  $ npm i @nestjs/passport@10.0.1
 
-- El paquete @nestjs/jwt ayuda a la manipulación de JWT.
-- El paquete passport-jwt implementa la estrategia JWT.
-- Al paquete @types/passport-jwt proporciona las definiciones de tipo para facilitar el desarrollo.
+- Autocompletado de rutas para uso de TypeORM y el módulo de trabajo con MySQL.
+ $ npm i @nestjs/typeorm@10.0.0 mysql2 typeorm
+
 
 https://codigoencasa.com/autenticacion-jwt-de-nestjs/
 ```

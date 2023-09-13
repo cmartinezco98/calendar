@@ -10,6 +10,7 @@ export class AuthService {
 
 
   async auth() {
+
     const token = await this.jwtTokenService.sign({
       // k_user: user.k_user,
       // n_name: user.n_name,
