@@ -28,7 +28,7 @@ CREATE TABLE `clients` (
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`k_client`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `clients` (
 
 LOCK TABLES `clients` WRITE;
 /*!40000 ALTER TABLE `clients` DISABLE KEYS */;
+INSERT INTO `clients` VALUES (2,'Client 1','2023-09-14 22:31:28',NULL);
 /*!40000 ALTER TABLE `clients` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +61,7 @@ CREATE TABLE `projects` (
   KEY `fk_client` (`fk_client`),
   CONSTRAINT `projects_ibfk_1` FOREIGN KEY (`fk_client`) REFERENCES `clients` (`k_client`) ON UPDATE CASCADE,
   CONSTRAINT `projects_ibfk_2` FOREIGN KEY (`fk_user`) REFERENCES `users` (`k_user`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,6 +70,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
+INSERT INTO `projects` VALUES (4,'Project 1 Actualizado','n_description',9,2,'2023-09-14 22:35:34',NULL);
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,7 +87,7 @@ CREATE TABLE `roles` (
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`k_role`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,6 +96,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (2,'Role 1','2023-09-14 22:54:54',NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +113,7 @@ CREATE TABLE `task_status` (
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`k_status`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,6 +122,7 @@ CREATE TABLE `task_status` (
 
 LOCK TABLES `task_status` WRITE;
 /*!40000 ALTER TABLE `task_status` DISABLE KEYS */;
+INSERT INTO `task_status` VALUES (2,'Status 1','2023-09-14 23:11:06',NULL);
 /*!40000 ALTER TABLE `task_status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,4 +235,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-13 18:31:24
+-- Dump completed on 2023-09-14 23:34:42
