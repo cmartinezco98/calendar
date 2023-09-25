@@ -1,9 +1,16 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+
+const relations = [
+  'project',
+  'taskCreator',
+  'taskResponsible',
+  'role'
+];
 
 @Injectable()
 export class UsersService {
@@ -17,7 +24,7 @@ export class UsersService {
       const resCreateUser = await this.userRepository.save(createDataUser);
       return resCreateUser;
     } catch (err) {
-      throw new HttpException(`${err.sqlMessage}, Error al crear el usuario`, HttpStatus.BAD_REQUEST);;
+      throw new HttpException(`${err.sqlMessage}, Error al crear el usuario`, HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -27,20 +34,31 @@ export class UsersService {
   }
 
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find({ relations });
   }
 
-  findOne(id: number) {
-    return `This action returns all users`;
+  async findOne(k_user: number): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { k_user },
+      relations,
+    });
+    if (!user) throw new HttpException(`No se encuentra el usuario con el ID: ${k_user}, Error de busqueda`, HttpStatus.NOT_FOUND);
+    return user;
   }
 
 
-  update(id: number, updateUserDto: UpdateUserDto) {
+  update(id: number, data: UpdateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(k_user: number): Promise<DeleteResult> {
+    await this.findOne(k_user);
+    try {
+      const res = await this.userRepository.delete(k_user);
+      return res;
+    } catch (err) {
+      throw new HttpException(`${err.sqlMessage}, Error al eliminar`, HttpStatus.BAD_REQUEST);
+    }
   }
 }

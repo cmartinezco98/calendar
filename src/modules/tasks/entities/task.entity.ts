@@ -1,4 +1,6 @@
-import { Column, Entity, NumericType, PrimaryColumn } from "typeorm";
+import { TaskStatus } from "src/modules/task_status/entities/task_status.entity";
+import { User } from "src/modules/users/entities/user.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 @Entity('tasks')
 export class Task {
@@ -17,10 +19,23 @@ export class Task {
     @Column()
     fk_user_creator: number;
     @Column()
-    @Column()
     fk_user_responsible: number;
     @Column()
     f_created_at: string;
     @Column()
     f_updated_at: string;
+
+    //Relaciones
+
+    @ManyToOne((Type) => User, (userCreator) => userCreator.taskCreator)
+    @JoinColumn({ name: 'fk_user_creator', referencedColumnName: 'k_user' })
+    userCreator: User;
+
+    @ManyToOne((Type) => User, (userResponsible) => userResponsible.taskResponsible)
+    @JoinColumn({ name: 'fk_user_responsible', referencedColumnName: 'k_user' })
+    userResponsible: User;
+
+    @ManyToOne((Type) => TaskStatus, (taskStatus) => taskStatus.task)
+    @JoinColumn({ name: 'fk_status', referencedColumnName: 'k_status' })
+    taskStatus: TaskStatus;
 }

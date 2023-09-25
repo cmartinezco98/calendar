@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Client } from "src/modules/clients/entities/client.entity";
+import { User } from "src/modules/users/entities/user.entity";
+import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
 @Entity('projects')
 export class Project {
     @PrimaryColumn()
@@ -15,4 +17,14 @@ export class Project {
     f_created_at: string;
     @Column()
     f_updated_at: string;
+
+    //Relaciones
+    @ManyToOne((Type) => User, (user) => user.project)
+    @JoinColumn({ name: 'fk_user', referencedColumnName: 'k_user' })
+    user: User;
+
+    @ManyToOne((Type) => Client, (client) => client.project)
+    @JoinColumn({ name: 'fk_client', referencedColumnName: 'k_client' })
+    client: Client;
+
 }

@@ -5,6 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 import { Client } from './entities/client.entity';
 
+const relations = [
+  'project'
+]
+
 @Injectable()
 export class ClientsService {
 
@@ -23,12 +27,12 @@ export class ClientsService {
   }
 
   async findAll(): Promise<Client[]> {
-    const resClients = await this.clientRepository.find();
+    const resClients = await this.clientRepository.find({ relations });
     return resClients;
   }
 
   async findOne(k_client: number): Promise<Client> {
-    const resClient = await this.clientRepository.findOneBy({ k_client });
+    const resClient = await this.clientRepository.findOne({ where: { k_client }, relations });
     if (!resClient) throw new HttpException(`No se encuentra cliente con el ID ${k_client}`, HttpStatus.NOT_FOUND);
     return resClient;
   }

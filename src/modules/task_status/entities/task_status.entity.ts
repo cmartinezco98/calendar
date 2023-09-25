@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Task } from "src/modules/tasks/entities/task.entity";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 
 @Entity('task_status')
 export class TaskStatus {
@@ -10,4 +11,9 @@ export class TaskStatus {
     f_created_at: string;
     @Column()
     f_updated_at: string;
+
+    //Relaciones
+
+    @OneToMany((Type) => Task, (task) => task.taskStatus)
+    task: Task[];
 }

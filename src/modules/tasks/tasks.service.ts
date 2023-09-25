@@ -5,6 +5,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { Repository, UpdateResult } from 'typeorm';
 
+const relations = [
+  'taskStatus'
+];
+
 @Injectable()
 export class TasksService {
   constructor(
@@ -22,12 +26,12 @@ export class TasksService {
   }
 
   async findAll(): Promise<Task[]> {
-    const resTasks = await this.taskRepository.find();
+    const resTasks = await this.taskRepository.find({ relations });
     return resTasks;
   }
 
   async findOne(k_task: number): Promise<Task> {
-    const resTask = await this.taskRepository.findOneBy({ k_task });
+    const resTask = await this.taskRepository.findOne({ where: { k_task }, relations });
     if (!resTask) throw new HttpException(`No se encuentra tarea con el ID ${k_task}`, HttpStatus.NOT_FOUND);
     return resTask;
   }

@@ -153,7 +153,7 @@ CREATE TABLE `tasks` (
   CONSTRAINT `tasks_ibfk_2` FOREIGN KEY (`fk_user_creator`) REFERENCES `users` (`k_user`) ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_3` FOREIGN KEY (`fk_project`) REFERENCES `projects` (`k_project`) ON UPDATE CASCADE,
   CONSTRAINT `tasks_ibfk_4` FOREIGN KEY (`fk_user_responsible`) REFERENCES `users` (`k_user`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,6 +162,7 @@ CREATE TABLE `tasks` (
 
 LOCK TABLES `tasks` WRITE;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
+INSERT INTO `tasks` VALUES (1,'task description',4,'2023-09-13 17:43:14','2023-09-13 17:43:14',2,9,9,'2023-09-24 20:48:15',NULL);
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +182,7 @@ CREATE TABLE `user_role` (
   KEY `fk_user` (`fk_user`),
   CONSTRAINT `user_role_ibfk_1` FOREIGN KEY (`fk_user`) REFERENCES `users` (`k_user`) ON UPDATE CASCADE,
   CONSTRAINT `user_role_ibfk_2` FOREIGN KEY (`fk_role`) REFERENCES `roles` (`k_role`) ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,6 +191,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (1,9,2);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,4 +237,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-14 23:34:42
+-- Dump completed on 2023-09-24 21:01:27
