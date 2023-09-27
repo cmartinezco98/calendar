@@ -12,8 +12,9 @@ export class AuthController {
     return this.authService.authSignin(createUserDto);
   }
 
-  @Get('login')
+  @Post('login')
   authLogin(@Body() dataUser: LoginAuthDto): object {
+    console.log(dataUser);
     return this.authService.authLogin(dataUser);
   }
 }
