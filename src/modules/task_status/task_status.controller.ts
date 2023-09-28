@@ -1,8 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { TaskStatusService } from './task_status.service';
 import { CreateTaskStatusDto } from './dto/create-task_status.dto';
 import { UpdateTaskStatusDto } from './dto/update-task_status.dto';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
+@UseGuards(JwtAuthGuard)
 @Controller('task-status')
 export class TaskStatusController {
   constructor(private readonly taskStatusService: TaskStatusService) { }
