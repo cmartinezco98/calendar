@@ -96,5 +96,14 @@ $  npm i bcrypt@5.1.1
 
 - Autentificacion con JWT en Nest
 https://codigoencasa.com/autenticacion-jwt-de-nestjs/
+
+- NodeMailer 
+https://www.npmjs.com/package/@nestjs-modules/mailer
+https://nest-modules.github.io/mailer/
+
+$ npm install --save @nestjs-modules/mailer nodemailer
+$ npm install --save-dev @types/nodemailer
+
+
 ```
 
