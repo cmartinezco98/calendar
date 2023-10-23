@@ -5,6 +5,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
 import { Repository, UpdateResult } from 'typeorm';
 
+const relations = [
+  'user',
+  'client'
+];
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -22,12 +27,12 @@ export class ProjectsService {
   }
 
   async findAll(): Promise<Project[]> {
-    const resProjects = await this.projectRepository.find();
+    const resProjects = await this.projectRepository.find({ relations });
     return resProjects;
   }
 
   async findOne(k_project: number): Promise<Project> {
-    const resProject = await this.projectRepository.findOneBy({ k_project });
+    const resProject = await this.projectRepository.findOne({ where: { k_project }, relations });
     if (!resProject) throw new HttpException(`No se encuentra proyecto con el ID ${k_project}`, HttpStatus.NOT_FOUND);
     return resProject;
   }

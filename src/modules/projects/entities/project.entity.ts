@@ -1,6 +1,7 @@
 import { Client } from "src/modules/clients/entities/client.entity";
+import { Task } from "src/modules/tasks/entities/task.entity";
 import { User } from "src/modules/users/entities/user.entity";
-import { Column, Entity, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 @Entity('projects')
 export class Project {
     @PrimaryColumn()
@@ -27,4 +28,6 @@ export class Project {
     @JoinColumn({ name: 'fk_client', referencedColumnName: 'k_client' })
     client: Client;
 
+    @OneToMany((Type) => Task, (task) => task.project)
+    tasks: Task[];
 }

@@ -6,7 +6,10 @@ import { Task } from './entities/task.entity';
 import { Repository, UpdateResult } from 'typeorm';
 
 const relations = [
-  'taskStatus'
+  'userCreator',
+  'userResponsible',
+  'taskStatus',
+  'project'
 ];
 
 @Injectable()
@@ -27,6 +30,14 @@ export class TasksService {
 
   async findAll(): Promise<Task[]> {
     const resTasks = await this.taskRepository.find({ relations });
+    return resTasks;
+  }
+
+  async findAllByUserResponsible(fk_user_responsible: number): Promise<Task[]> {
+    const resTasks = await this.taskRepository.find({
+      where: { fk_user_responsible },
+      relations
+    });
     return resTasks;
   }
 
