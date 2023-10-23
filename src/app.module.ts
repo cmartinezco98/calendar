@@ -16,7 +16,7 @@ import { MailerModule } from './modules/mailer/mailer.module';
     type: 'mysql',
     host: 'localhost',
     username: 'root',
-    password: 'root',
+    password: 'mysql',
     database: 'calendar',
     multipleStatements: true,
     entities: [],
