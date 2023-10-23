@@ -87,7 +87,7 @@ CREATE TABLE `roles` (
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`k_role`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +96,7 @@ CREATE TABLE `roles` (
 
 LOCK TABLES `roles` WRITE;
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` VALUES (2,'Role 1','2023-09-14 22:54:54',NULL);
+INSERT INTO `roles` VALUES (1,'admin','2023-09-14 22:54:54',NULL),(4,'director','2023-10-22 14:22:54',NULL),(5,'normal','2023-10-22 14:23:14',NULL);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +191,7 @@ CREATE TABLE `user_role` (
 
 LOCK TABLES `user_role` WRITE;
 /*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,9,2);
+INSERT INTO `user_role` VALUES (1,9,1);
 /*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +211,7 @@ CREATE TABLE `users` (
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`k_user`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (9,'Santiago','Martinez','cmartinezco07@correo.com','$2b$10$JdQw5/H68sgS5FcVaMC2heLxzJqFfnI6OcYCMY58sZ9K2sWDkm5vS','2023-09-13 17:43:14',NULL),(10,'Santiago','Martinez','cmartinezco@correo.com','$2b$10$wybAZGb0KbAazHVyd4ErLu1tqv8rr3jDddLwJOsw38eStYD0ovvly','2023-09-13 17:55:32',NULL),(11,'Santiago','Martinez','cmartinezco0707@correo.com','$2b$10$yZ/gIHXOw3/BBQklcDO4dultaVzmGy.xZBcNcJumV62W8AIJacKK2','2023-09-13 18:25:54',NULL),(12,'Santiago','Martinez','user','$2b$10$sl7OljdmYt83kb05QRHyxerOYTTp2x7eQhczA.C7iFsAqcKH0c9TK','2023-09-27 23:38:05',NULL);
+INSERT INTO `users` VALUES (9,'Santiago','Martinez','cmartinezco07@correo.com','$2b$10$JdQw5/H68sgS5FcVaMC2heLxzJqFfnI6OcYCMY58sZ9K2sWDkm5vS','2023-09-13 17:43:14',NULL),(10,'Santiago','Martinez','cmartinezco@correo.com','$2b$10$wybAZGb0KbAazHVyd4ErLu1tqv8rr3jDddLwJOsw38eStYD0ovvly','2023-09-13 17:55:32',NULL),(11,'Santiago','Martinez','cmartinezco0707@correo.com','$2b$10$yZ/gIHXOw3/BBQklcDO4dultaVzmGy.xZBcNcJumV62W8AIJacKK2','2023-09-13 18:25:54',NULL),(12,'Santiago','Martinez','user','$2b$10$sl7OljdmYt83kb05QRHyxerOYTTp2x7eQhczA.C7iFsAqcKH0c9TK','2023-09-27 23:38:05',NULL),(13,'Santiago','Martinez','userPrueba','$2b$10$EAhI3jGkr8d0YZFtlWfH7eG0dsq2ektNedz7gL/cHm9YGFoiZp6g.','2023-10-22 14:50:12',NULL),(14,'Santiago','Martinez','userPrueba1','$2b$10$pfAN1P.kG/F8FG2W.OWdde7rBKPjCTuNQprxRPZrT.H6lwUDo2N66','2023-10-22 23:16:47',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -237,4 +237,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-27 23:53:13
+-- Dump completed on 2023-10-22 23:50:11
