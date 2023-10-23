@@ -4,6 +4,7 @@ import { DeleteResult, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { Role } from '../roles/entities/role.entity';
 
 const relations = [
   'project',
@@ -15,13 +16,19 @@ const relations = [
 @Injectable()
 export class UsersService {
   constructor(
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>,
     @InjectRepository(User)
     private userRepository: Repository<User>
   ) { }
 
   async create(createDataUser: CreateUserDto): Promise<User> {
     try {
+      const user = new User();
+      // const { n_rol } = createDataUser;
       const resCreateUser = await this.userRepository.save(createDataUser);
+      // const roleRepository = await this.roleRepository.findBy({ k_role: n_rol });
+      // console.log(roleRepository);
       return resCreateUser;
     } catch (err) {
       throw new HttpException(`${err.sqlMessage}, Error al crear el usuario`, HttpStatus.BAD_REQUEST);

@@ -3,4 +3,5 @@ export class CreateUserDto {
     n_last_name: string;
     n_password: string;
     n_email: string;
+    n_rol: Array<[]>;
 }

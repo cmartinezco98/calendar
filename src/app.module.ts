@@ -9,7 +9,7 @@ import { ProjectsModule } from './modules/projects/projects.module';
 import { RolesModule } from './modules/roles/roles.module';
 import { TaskStatusModule } from './modules/task_status/task_status.module';
 import { TasksModule } from './modules/tasks/tasks.module';
-import { MailerModule } from './modules/mailer/mailer.module';
+import { MailModule } from './modules/mailer/mail.module';
 
 @Module({
   imports: [AuthModule, UsersModule, TypeOrmModule.forRoot({
@@ -21,7 +21,7 @@ import { MailerModule } from './modules/mailer/mailer.module';
     multipleStatements: true,
     entities: [],
     autoLoadEntities: true
-  }), ClientsModule, ProjectsModule, RolesModule, TaskStatusModule, TasksModule, MailerModule],
+  }), ClientsModule, ProjectsModule, RolesModule, TaskStatusModule, TasksModule, MailModule],
   controllers: [AppController],
   providers: [AppService],
 })
