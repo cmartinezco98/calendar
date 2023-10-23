@@ -19,6 +19,11 @@ export class TasksController {
     return this.tasksService.findAll();
   }
 
+  @Get('user/:idUser')
+  findAllByUserResponsible(@Param('idUser') idUser: number) {
+    return this.tasksService.findAllByUserResponsible(idUser);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.tasksService.findOne(id);

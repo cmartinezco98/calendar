@@ -1,3 +1,4 @@
+import { Project } from "src/modules/projects/entities/project.entity";
 import { TaskStatus } from "src/modules/task_status/entities/task_status.entity";
 import { User } from "src/modules/users/entities/user.entity";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
@@ -38,4 +39,8 @@ export class Task {
     @ManyToOne((Type) => TaskStatus, (taskStatus) => taskStatus.task)
     @JoinColumn({ name: 'fk_status', referencedColumnName: 'k_status' })
     taskStatus: TaskStatus;
+
+    @ManyToOne((Type) => Project, (project) => project.tasks)
+    @JoinColumn({ name: 'fk_project', referencedColumnName: 'k_project' })
+    project: Project;
 }
