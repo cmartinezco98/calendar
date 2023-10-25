@@ -17,7 +17,7 @@ export class User {
     @Column()
     n_email: string;
 
-    @Column({ select: false })
+    @Column()
     n_password: string;
 
     @Column()

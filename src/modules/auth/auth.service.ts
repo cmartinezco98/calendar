@@ -44,7 +44,6 @@ export class AuthService {
   }
 
   async authLogin({ n_email, n_password }: LoginAuthDto): Promise<object> {
-
     const resUser: User = await this.usersService.findOneByEmail(n_email);
     if (resUser) {
       const match = await compare(n_password, resUser.n_password);
