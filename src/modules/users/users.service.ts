@@ -1,10 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, In } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Role } from '../roles/entities/role.entity';
+import { normalize } from 'path';
 
 const relations = [
   'project',
@@ -22,14 +23,21 @@ export class UsersService {
     private userRepository: Repository<User>
   ) { }
 
-  async create(createDataUser: CreateUserDto): Promise<User> {
+  async create(createDataUser: CreateUserDto) {
+    const emailExist = await this.findOneByEmail(createDataUser.n_email);
+    if (emailExist) {
+      throw new HttpException('Error al crear usuario, Usuario existente', HttpStatus.BAD_REQUEST);
+    }
     try {
-      const user = new User();
-      // const { n_rol } = createDataUser;
-      const resCreateUser = await this.userRepository.save(createDataUser);
-      // const roleRepository = await this.roleRepository.findBy({ k_role: n_rol });
-      // console.log(roleRepository);
-      return resCreateUser;
+      const resCreateUser = await this.userRepository.create(createDataUser);
+      const roles = await this.roleRepository.find({ where: { k_role: In(createDataUser.n_rol) } });  
+      console.log(resCreateUser);   
+      const user: User = {
+        ...resCreateUser,
+        role:roles
+      }
+      const resSaveUser = await this.userRepository.save(user);
+      return resSaveUser;
     } catch (err) {
       throw new HttpException(`${err.sqlMessage}, Error al crear el usuario`, HttpStatus.BAD_REQUEST);
     }

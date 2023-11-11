@@ -1,11 +1,11 @@
 import { Project } from "src/modules/projects/entities/project.entity";
 import { Role } from "src/modules/roles/entities/role.entity";
 import { Task } from "src/modules/tasks/entities/task.entity";
-import { Collection, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn } from "typeorm";
+import { Collection, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     k_user: number;
 
     @Column()
@@ -41,10 +41,10 @@ export class User {
     @JoinTable({
         name: 'user_role',
         joinColumn: {
-            name: ' fk_user',
+            name: 'fk_user', referencedColumnName: 'k_user'
         },
         inverseJoinColumn: {
-            name: ' fk_role',
+            name: 'fk_role', referencedColumnName: 'k_role'
         },
     })
     role: Role[];

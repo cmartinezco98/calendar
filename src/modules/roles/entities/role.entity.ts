@@ -8,12 +8,12 @@ export class Role {
     @Column()
     n_name: string;
     @Column()
-    f_created_at: string;
+    f_created_at?: string;
     @Column()
-    f_updated_at: string;
+    f_updated_at?: string;
 
     //Relaciones
 
-    @ManyToMany((type) => User, (user) => user.role)
+    @ManyToMany((type) => User, (user) => user.role, { cascade: true })
     user: User[];
 }

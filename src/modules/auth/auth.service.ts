@@ -27,15 +27,8 @@ export class AuthService {
   }
 
   async authSignin(dataCreateUser: CreateUserDto): Promise<object> {
-
-    const userExist = await this.usersService.findOneByEmail(dataCreateUser.n_email);
-    console.log(userExist);
-    if (userExist) {
-      throw new HttpException('Error al crear usuario, Usuario existente', HttpStatus.BAD_REQUEST);
-    }
     dataCreateUser.n_password = await hash(dataCreateUser.n_password, 10);
     let resUser: User = await this.usersService.create(dataCreateUser);
-    console.log(resUser)
     if (resUser) {
       resUser = await this.usersService.findOneByEmail(resUser.n_email);
       this.JWTGenerator(resUser);
