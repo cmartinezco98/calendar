@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.2
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 12-09-2023 a las 03:52:52
--- Versión del servidor: 8.0.28
--- Versión de PHP: 8.1.17
+-- Tiempo de generación: 21-11-2023 a las 12:37:52
+-- Versión del servidor: 8.0.35-0ubuntu0.22.04.1
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `clients` (
   `k_client` bigint NOT NULL,
-  `n_name` text COLLATE utf8mb4_general_ci NOT NULL,
+  `n_name` text NOT NULL,
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -42,13 +42,13 @@ CREATE TABLE `clients` (
 
 CREATE TABLE `projects` (
   `k_project` bigint NOT NULL,
-  `n_name` text COLLATE utf8mb4_general_ci NOT NULL,
-  `n_description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `n_name` text NOT NULL,
+  `n_description` text NOT NULL,
   `fk_user` bigint NOT NULL,
   `fk_client` bigint NOT NULL,
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -58,10 +58,21 @@ CREATE TABLE `projects` (
 
 CREATE TABLE `roles` (
   `k_role` bigint NOT NULL,
-  `n_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `n_name` varchar(255) NOT NULL,
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `roles`
+--
+
+INSERT INTO `roles` (`k_role`, `n_name`, `f_created_at`, `f_updated_at`) VALUES
+(1, 'Administrador', '2023-09-14 22:54:54', NULL),
+(2, 'Director', '2023-10-22 14:22:54', NULL),
+(3, 'Diseño', '2023-10-22 14:23:14', NULL),
+(4, 'Producción', '2023-11-21 10:20:39', NULL),
+(5, 'Ejecutivo(a)', '2023-11-21 10:20:39', NULL);
 
 -- --------------------------------------------------------
 
@@ -71,7 +82,7 @@ CREATE TABLE `roles` (
 
 CREATE TABLE `tasks` (
   `k_task` bigint NOT NULL,
-  `n_description` text COLLATE utf8mb4_general_ci NOT NULL,
+  `n_description` text NOT NULL,
   `fk_project` bigint NOT NULL,
   `f_start` datetime NOT NULL,
   `f_end` datetime NOT NULL,
@@ -80,7 +91,7 @@ CREATE TABLE `tasks` (
   `fk_user_responsible` bigint NOT NULL,
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -90,10 +101,17 @@ CREATE TABLE `tasks` (
 
 CREATE TABLE `task_status` (
   `k_status` bigint NOT NULL,
-  `n_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `n_name` varchar(255) NOT NULL,
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `task_status`
+--
+
+INSERT INTO `task_status` (`k_status`, `n_name`, `f_created_at`, `f_updated_at`) VALUES
+(1, 'En proceso', '2023-11-21 10:22:10', NULL);
 
 -- --------------------------------------------------------
 
@@ -103,13 +121,20 @@ CREATE TABLE `task_status` (
 
 CREATE TABLE `users` (
   `k_user` bigint NOT NULL,
-  `n_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `n_last_name` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `n_email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `n_password` text COLLATE utf8mb4_general_ci NOT NULL,
+  `n_name` varchar(255) NOT NULL,
+  `n_last_name` varchar(255) NOT NULL,
+  `n_email` varchar(100) NOT NULL,
+  `n_password` text NOT NULL,
   `f_created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `f_updated_at` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `users`
+--
+
+INSERT INTO `users` (`k_user`, `n_name`, `n_last_name`, `n_email`, `n_password`, `f_created_at`, `f_updated_at`) VALUES
+(1, 'Hans', '', 'hans@socialexperience.com.co', '$2b$10$JdQw5/H68sgS5FcVaMC2heLxzJqFfnI6OcYCMY58sZ9K2sWDkm5vS', '2023-11-21 10:25:02', NULL);
 
 -- --------------------------------------------------------
 
@@ -121,7 +146,14 @@ CREATE TABLE `user_role` (
   `k_user_role` bigint NOT NULL,
   `fk_user` bigint NOT NULL,
   `fk_role` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `user_role`
+--
+
+INSERT INTO `user_role` (`k_user_role`, `fk_user`, `fk_role`) VALUES
+(1, 1, 1);
 
 --
 -- Índices para tablas volcadas
@@ -197,7 +229,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT de la tabla `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `k_role` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `k_role` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tasks`
@@ -209,19 +241,19 @@ ALTER TABLE `tasks`
 -- AUTO_INCREMENT de la tabla `task_status`
 --
 ALTER TABLE `task_status`
-  MODIFY `k_status` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `k_status` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `k_user` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `k_user` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `k_user_role` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `k_user_role` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

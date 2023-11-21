@@ -5,6 +5,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
 import { LoginAuthDto } from './dto/login-auth.dto';
+import { Role } from '../roles/entities/role.entity';
 
 @Injectable()
 export class AuthService {
@@ -16,11 +17,15 @@ export class AuthService {
   };
 
   async JWTGenerator(payload: User) {
+    let roles = payload.role.map((role: Role) => {
+      return role.n_name
+    });
 
     const token = await this.jwtTokenService.sign({
       k_user: payload.k_user,
       n_name: payload.n_name,
-      n_email: payload.n_email
+      n_email: payload.n_email,
+      roles: roles
     });
     this.data.token = token;
     this.data.result = "Inicio de sesion exitoso"
@@ -31,7 +36,6 @@ export class AuthService {
     let resUser: User = await this.usersService.create(dataCreateUser);
     if (resUser) {
       resUser = await this.usersService.findOneByEmail(resUser.n_email);
-      this.JWTGenerator(resUser);
     }
     return this.data;
   }

@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository, In } from 'typeorm';
+import { hash } from 'bcrypt';
+import { DeleteResult, In, Repository } from 'typeorm';
+import { Role } from '../roles/entities/role.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { Role } from '../roles/entities/role.entity';
-import { normalize } from 'path';
 
 const relations = [
   'project',
@@ -29,12 +29,13 @@ export class UsersService {
       throw new HttpException('Error al crear usuario, Usuario existente', HttpStatus.BAD_REQUEST);
     }
     try {
+      createDataUser.n_password = await hash(createDataUser.n_password, 10);
+
       const resCreateUser = await this.userRepository.create(createDataUser);
-      const roles = await this.roleRepository.find({ where: { k_role: In(createDataUser.n_rol) } });  
-      console.log(resCreateUser);   
+      const roles = await this.roleRepository.find({ where: { k_role: In(createDataUser.n_rol) } });
       const user: User = {
         ...resCreateUser,
-        role:roles
+        role: roles
       }
       const resSaveUser = await this.userRepository.save(user);
       return resSaveUser;
@@ -44,10 +45,9 @@ export class UsersService {
   }
 
   async findOneByEmail(email: string): Promise<User> {
-    const user = await this.userRepository.findOneBy({ n_email: email });
+    const user = await this.userRepository.findOne({ where: { n_email: email }, relations });
     return user;
   }
-
 
   async findAll(): Promise<User[]> {
     return await this.userRepository.find({ relations });
