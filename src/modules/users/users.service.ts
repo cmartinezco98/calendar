@@ -81,6 +81,7 @@ export class UsersService {
 
     resCurrentRole.role = resCurrentRole.role.filter((role) => {
       console.log(role.k_role);
+      return
   })
 
     return resUpdateUser;
