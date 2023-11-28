@@ -11,6 +11,8 @@ export class Project {
     @Column()
     n_description: string;
     @Column()
+    i_closed: number;
+    @Column()
     fk_user: number;
     @Column()
     fk_client: number;

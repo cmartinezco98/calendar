@@ -27,7 +27,7 @@ export class ClientsService {
   }
 
   async findAll(): Promise<Client[]> {
-    const resClients = await this.clientRepository.find({ relations });
+    const resClients = await this.clientRepository.find({ relations, order: { n_name: 'ASC' } });
     return resClients;
   }
 

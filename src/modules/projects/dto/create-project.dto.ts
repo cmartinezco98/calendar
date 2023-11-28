@@ -4,4 +4,5 @@ export class CreateProjectDto {
     n_description: string;
     fk_user: number;
     fk_client: number;
+    i_closed: number;
 }

@@ -27,7 +27,12 @@ export class ProjectsService {
   }
 
   async findAll(): Promise<Project[]> {
-    const resProjects = await this.projectRepository.find({ relations });
+    const resProjects = await this.projectRepository.find({ relations, order: { f_created_at: 'DESC' } });
+    return resProjects;
+  }
+
+  async findAllOpen(): Promise<Project[]> {
+    const resProjects = await this.projectRepository.find({ relations, order: { n_name: 'ASC' }, where: { i_closed: 0 } });
     return resProjects;
   }
 

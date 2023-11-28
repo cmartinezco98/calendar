@@ -19,6 +19,11 @@ export class ProjectsController {
     return this.projectsService.findAll();
   }
 
+  @Get('/open')
+  findAllOpen() {
+    return this.projectsService.findAllOpen();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.projectsService.findOne(+id);
