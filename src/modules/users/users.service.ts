@@ -63,8 +63,27 @@ export class UsersService {
   }
 
 
-  update(id: number, data: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(k_user: number, data: UpdateUserDto) {
+    const { n_email, n_last_name, n_name, n_rol }: UpdateUserDto = data;
+    console.log("id: ", k_user, "Data user:", data);
+    await this.findOne(k_user);
+    const resUpdateUser = await this.userRepository.update(k_user, { n_email, n_last_name, n_name });
+    if (!resUpdateUser) throw new HttpException(`No se fue posible actualizar usuario: ${k_user}, Error de actualizacion`, HttpStatus.CONFLICT);
+
+    const resCurrentRole = await this.userRepository.findOne({
+      relations: {
+        role: true
+      },
+      where: { k_user }
+    })
+    console.log(resCurrentRole);
+    if (!resCurrentRole) throw new HttpException(`No se fue posible actualizar usuario: ${k_user}, Error de actualizacion`, HttpStatus.CONFLICT);
+
+    resCurrentRole.role = resCurrentRole.role.filter((role) => {
+      console.log(role.k_role);
+  })
+
+    return resUpdateUser;
   }
 
   async remove(k_user: number): Promise<DeleteResult> {
