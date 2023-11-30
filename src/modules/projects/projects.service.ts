@@ -19,7 +19,11 @@ export class ProjectsService {
 
   async create(createDataProject: CreateProjectDto): Promise<Project> {
     try {
-      const resProjectCreate = await this.projectRepository.save(createDataProject);
+      let resProjectCreate;
+      for (const fk_user of createDataProject.fk_users) {
+        createDataProject.fk_user = fk_user;
+        resProjectCreate = await this.projectRepository.save(createDataProject);
+      }
       return resProjectCreate;
     } catch (err) {
       throw new HttpException(`${err.sqlMessage}, Error al crear proyecto`, HttpStatus.BAD_REQUEST);

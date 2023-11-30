@@ -66,32 +66,33 @@ export class UsersService {
   }
 
 
-  async update(k_user: number, data: UpdateUserDto):Promise<User> {
+  async update(k_user: number, data: UpdateUserDto): Promise<User> {
     //Destructuracion de objeto UpdateUserDto
     const { n_email, n_last_name, n_name, n_rol }: UpdateUserDto = data;
 
-      //Busqueda de Entidad User por ID 
-      const resUser: User = await this.userRepository.findOne({ where: { k_user } });
-      if (!resUser) throw new HttpException(`No se fue posible actualizar el usuario: ${k_user}, Error de actualización`, HttpStatus.CONFLICT);
+    //Busqueda de Entidad User por ID 
+    const resUser: User = await this.userRepository.findOne({ where: { k_user } });
+    if (!resUser) throw new HttpException(`No se fue posible actualizar el usuario: ${k_user}, Error de actualización`, HttpStatus.CONFLICT);
 
-      //Busqueda de Entidad Role[] por ID 
-      const role: Role[] = await this.roleRepository.find({ where: { k_role: In(n_rol) } });
-      if (role.length == 0) throw new HttpException(`No se fue posible actualizar el rol es incorrecto, Error de actualización`, HttpStatus.CONFLICT);
-      //Actualizamos los valores de la Entidad User
-      resUser.n_last_name = n_last_name;
-      resUser.n_name = n_name;
-      resUser.n_email = n_email;
+    //Busqueda de Entidad Role[] por ID 
+    const role: Role[] = await this.roleRepository.find({ where: { k_role: In(n_rol) } });
+    if (role.length == 0) throw new HttpException(`No se fue posible actualizar el rol es incorrecto, Error de actualización`, HttpStatus.CONFLICT);
+    
+    //Actualizamos los valores de la Entidad User
+    resUser.n_last_name = n_last_name;
+    resUser.n_name = n_name;
+    resUser.n_email = n_email;
 
-      //Construimos nuevo objeto el cual se utilizara para actualizar tabla Muchos a Muchos
-      const user: User = {
-        ...resUser,
-        role
-      }
-      //El metodo save actualizara la Entidad User y su tabla pivote user_role
-      const resUpdateRole = await this.userRepository.save(user);
-      if (!resUpdateRole) throw new HttpException(`No se fue posible actualizar el role del usuario: ${k_user}, Error de actualización`, HttpStatus.CONFLICT);
+    //Construimos nuevo objeto el cual se utilizara para actualizar tabla Muchos a Muchos
+    const user: User = {
+      ...resUser,
+      role
+    }
+    //El metodo save actualizara la Entidad User y su tabla pivote user_role
+    const resUpdateRole = await this.userRepository.save(user);
+    if (!resUpdateRole) throw new HttpException(`No se fue posible actualizar el role del usuario: ${k_user}, Error de actualización`, HttpStatus.CONFLICT);
 
-      return resUpdateRole;
+    return resUpdateRole;
   }
 
   async remove(k_user: number): Promise<DeleteResult> {
