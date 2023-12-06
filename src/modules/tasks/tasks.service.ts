@@ -21,7 +21,11 @@ export class TasksService {
 
   async create(createDataTask: CreateTaskDto): Promise<Task> {
     try {
-      const resTaskCreate = await this.taskRepository.save(createDataTask);
+      let resTaskCreate;
+      for (const fk_user of createDataTask.fk_users) {
+        createDataTask.fk_user_responsible = fk_user;
+        resTaskCreate = await this.taskRepository.save(createDataTask);
+      }
       return resTaskCreate;
     } catch (err) {
       throw new HttpException(`${err.sqlMessage}, Error al crear tarea`, HttpStatus.BAD_REQUEST);

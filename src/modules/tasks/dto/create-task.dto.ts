@@ -6,4 +6,5 @@ export class CreateTaskDto {
     fk_status: number;
     fk_user_creator: number;
     fk_user_responsible: number;
+    fk_users: [number]
 }
