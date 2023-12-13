@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 28-11-2023 a las 01:16:48
+-- Tiempo de generación: 13-12-2023 a las 01:00:45
 -- Versión del servidor: 8.0.28
 -- Versión de PHP: 8.1.17
 
@@ -106,7 +106,8 @@ INSERT INTO `projects` (`k_project`, `n_name`, `n_description`, `i_closed`, `fk_
 (22, 'Holiday Program Oficinas', 'Producción-Audiovisual', 1, 5, 15, '2023-11-27 09:28:20', NULL),
 (23, 'APP FUNDACIÓN SANTA FE DE BOGOTÁ', 'Diseño', 0, 5, 9, '2023-11-27 09:43:48', NULL),
 (24, 'Plataformas Minambiente_Envato V2', 'Cuentas aaaa', 1, 1, 14, '2023-11-27 09:58:15', NULL),
-(25, 'Prueba', 'dfhsdjksdf', 1, 1, 3, '2023-11-27 19:33:52', NULL);
+(25, 'Prueba', 'dfhsdjksdf', 1, 1, 3, '2023-11-27 19:33:52', NULL),
+(26, 'Pruebaaaa #2', 'sdfsdfsd', 0, 1, 2, '2023-12-05 19:23:03', NULL);
 
 -- --------------------------------------------------------
 
@@ -219,7 +220,13 @@ INSERT INTO `tasks` (`k_task`, `n_description`, `fk_project`, `f_start`, `f_end`
 (66, 'Artes Mood - Mac Center', 2, '2023-11-27 12:00:00', '2023-11-27 12:44:33', 1, 3, 3, '2023-11-27 12:44:49', NULL),
 (67, 'Organización tráfico', 7, '2023-11-27 09:27:00', '2023-11-27 10:33:12', 1, 3, 3, '2023-11-27 12:45:50', NULL),
 (68, 'sdfgsddf', 24, '2023-12-01 00:00:00', '2023-12-06 19:04:42', 1, 1, 1, '2023-11-27 19:05:00', NULL),
-(69, 'aaaa', 24, '2023-11-28 09:00:00', '2023-11-28 14:00:22', 1, 14, 1, '2023-11-27 19:08:43', NULL);
+(69, 'aaaa', 24, '2023-11-28 09:00:00', '2023-11-28 14:00:22', 1, 14, 1, '2023-11-27 19:08:43', NULL),
+(70, 'Pruebaaaaaa', 23, '2023-12-05 00:00:00', '2023-12-12 18:55:14', 1, 14, 14, '2023-12-05 18:55:23', NULL),
+(71, 'Prueba', 10, '2023-12-13 00:00:00', '2023-12-06 18:57:56', 1, 14, 1, '2023-12-05 18:58:09', NULL),
+(72, 'Pruebaaaa multi user', 23, '2023-12-26 19:20:23', '2023-12-31 19:20:24', 1, 14, 1, '2023-12-05 19:20:30', NULL),
+(73, 'Pruebaaaa multi user', 23, '2023-12-26 19:20:23', '2023-12-31 19:20:24', 1, 14, 2, '2023-12-05 19:20:30', NULL),
+(74, 'Pruebaaaa multi user', 23, '2023-12-26 19:20:23', '2023-12-31 19:20:24', 1, 14, 3, '2023-12-05 19:20:30', NULL),
+(75, 'Pruebaaaa multi user', 23, '2023-12-26 19:20:23', '2023-12-31 19:20:24', 1, 14, 4, '2023-12-05 19:20:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -298,11 +305,11 @@ INSERT INTO `user_role` (`k_user_role`, `fk_user`, `fk_role`) VALUES
 (7, 2, 1),
 (8, 3, 2),
 (9, 4, 2),
+(23, 14, 2),
 (11, 6, 3),
 (12, 7, 3),
 (13, 8, 3),
 (18, 13, 3),
-(21, 14, 3),
 (14, 9, 4),
 (15, 10, 4),
 (16, 11, 4),
@@ -377,7 +384,7 @@ ALTER TABLE `clients`
 -- AUTO_INCREMENT de la tabla `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `k_project` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `k_project` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -389,7 +396,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `tasks`
 --
 ALTER TABLE `tasks`
-  MODIFY `k_task` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `k_task` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `task_status`
@@ -407,7 +414,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `user_role`
 --
 ALTER TABLE `user_role`
-  MODIFY `k_user_role` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `k_user_role` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Restricciones para tablas volcadas
