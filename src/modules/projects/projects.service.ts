@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Project } from './entities/project.entity';
-import { Repository, UpdateResult } from 'typeorm';
 
 const relations = [
   'user',
@@ -32,8 +32,10 @@ export class ProjectsService {
   }
 
   async findAllOpen(): Promise<Project[]> {
-    const resProjects = await this.projectRepository.find({ relations, order: { n_name: 'ASC' }, where: { i_closed: 0 } });
-    return resProjects;
+    const resProjects = await this.projectRepository.find({ order: { n_name: 'ASC' }, where: { i_closed: 0 } });
+
+    if (resProjects) return resProjects;
+    throw new NotFoundException(`No se encuentron usuarios.`);
   }
 
   async findOne(k_project: number): Promise<Project> {

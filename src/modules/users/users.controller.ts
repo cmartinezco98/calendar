@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { UsersService } from './users.service';
 
 @UseGuards(JwtAuthGuard)
 @Controller('users')
@@ -11,12 +11,17 @@ export class UsersController {
 
   @Post()
   create(@Body() createDataUser: CreateUserDto) {
-    return this.usersService.create(createDataUser);  
+    return this.usersService.create(createDataUser);
   }
 
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get('/calendar')
+  findAllWithourRelations() {
+    return this.usersService.findAllWithOutRelations();
   }
 
   @Get(':id')

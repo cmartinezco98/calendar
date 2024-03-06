@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
 import { DeleteResult, In, Repository } from 'typeorm';
@@ -6,7 +6,6 @@ import { Role } from '../roles/entities/role.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { retry } from 'rxjs';
 
 const relations = [
   'project',
@@ -56,6 +55,13 @@ export class UsersService {
     return await this.userRepository.find({ relations });
   }
 
+  async findAllWithOutRelations(): Promise<User[]> {
+    const response = await this.userRepository.find();
+
+    if (response) return response;
+    throw new NotFoundException(`No se encuentron usuarios.`);
+  }
+
   async findOne(k_user: number): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { k_user },
@@ -77,7 +83,7 @@ export class UsersService {
     //Busqueda de Entidad Role[] por ID 
     const role: Role[] = await this.roleRepository.find({ where: { k_role: In(n_rol) } });
     if (role.length == 0) throw new HttpException(`No se fue posible actualizar el rol es incorrecto, Error de actualización`, HttpStatus.CONFLICT);
-    
+
     //Actualizamos los valores de la Entidad User
     resUser.n_last_name = n_last_name;
     resUser.n_name = n_name;
