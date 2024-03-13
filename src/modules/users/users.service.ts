@@ -37,8 +37,7 @@ export class UsersService {
         ...resCreateUser,
         role: roles
       }
-      console.log(user);
-      return
+
       const resSaveUser = await this.userRepository.save(user);
       return resSaveUser;
     } catch (err) {
@@ -56,7 +55,7 @@ export class UsersService {
   }
 
   async findAllWithOutRelations(): Promise<User[]> {
-    const response = await this.userRepository.find();
+    const response = await this.userRepository.find({ relations: ['role'] });
 
     if (response) return response;
     throw new NotFoundException(`No se encuentron usuarios.`);
